@@ -1,0 +1,50 @@
+#!/bin/python3
+
+import math
+import os
+import random
+import re
+import sys
+
+#
+# Complete the 'theLoveLetterMystery' function below.
+#
+# The function is expected to return an INTEGER.
+# The function accepts STRING s as parameter.
+#
+
+def theLoveLetterMystery(s):
+    # Write your code here
+    output = 0
+    reverse_count = -1
+    s = list(s) 
+    for x in range(len(s)):
+        if s[x] == s[reverse_count]:
+            reverse_count-=1
+            continue
+        else:
+            left_letter = ord(s[x].lower()) - ord('a') + 1
+            right_letter = ord(s[reverse_count].lower()) - ord('a') + 1
+            if left_letter > right_letter:
+                output += left_letter - right_letter
+                s[x] = s[reverse_count]  
+            else:
+                output += right_letter - left_letter
+                s[reverse_count] = s[x]  
+                
+                
+            reverse_count -= 1
+    return output
+if __name__ == '__main__':
+    fptr = open(os.environ['OUTPUT_PATH'], 'w')
+
+    q = int(input().strip())
+
+    for q_itr in range(q):
+        s = input()
+
+        result = theLoveLetterMystery(s)
+
+        fptr.write(str(result) + '\n')
+
+    fptr.close()
